@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Lassie{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css">
+    <script>
+        let clickCount = 0;
+        let lastClickTime = 0;
+        const CLICK_TIMEOUT = 1000; // 1 second timeout between clicks
+
+        function handleLogoClick(event) {
+            event.preventDefault();
+            const currentTime = new Date().getTime();
+            
+            // Reset counter if too much time has passed since last click
+            if (currentTime - lastClickTime > CLICK_TIMEOUT) {
+                clickCount = 0;
+            }
+            
+            clickCount++;
+            lastClickTime = currentTime;
+
+            // Redirect after 3 clicks
+            if (clickCount === 3) {
+                window.location.href = '{{ url_for("guru") }}';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <a href="#" onclick="handleLogoClick(event)">
+                <img src="/static/assets/lassie.svg" alt="Lassie Logo" class="navbar-logo">
+            </a>
+        </div>
+        <div class="navbar-right">
+            {% if session.get('user_id') %}
+                <span class="username">Welcome, {{ session.get('username') }}!</span>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="nav-btn">Login</a>
+                <a href="{{ url_for('register') }}" class="nav-btn">Register</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html> 
