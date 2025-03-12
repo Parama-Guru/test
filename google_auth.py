@@ -11,14 +11,36 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # OAuth 2.0 client configuration
-CLIENT_SECRETS_FILE = "lassie_google_auth.json"
+# Use environment variables instead of direct file path
+CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+PROJECT_ID = os.getenv('GOOGLE_PROJECT_ID')
+AUTH_URI = os.getenv('GOOGLE_AUTH_URI')
+TOKEN_URI = os.getenv('GOOGLE_TOKEN_URI')
+AUTH_PROVIDER_X509_CERT_URL = os.getenv('GOOGLE_AUTH_PROVIDER_X509_CERT_URL')
+REDIRECT_URI = os.getenv('GOOGLE_REDIRECT_URI')
+JAVASCRIPT_ORIGINS = os.getenv('GOOGLE_JAVASCRIPT_ORIGINS')
+
+# Create client config dictionary from environment variables
+CLIENT_CONFIG = {
+    "web": {
+        "client_id": CLIENT_ID,
+        "project_id": PROJECT_ID,
+        "auth_uri": AUTH_URI,
+        "token_uri": TOKEN_URI,
+        "auth_provider_x509_cert_url": AUTH_PROVIDER_X509_CERT_URL,
+        "client_secret": CLIENT_SECRET,
+        "redirect_uris": [REDIRECT_URI],
+        "javascript_origins": [JAVASCRIPT_ORIGINS]
+    }
+}
 SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']
 
 # Create OAuth2 flow
-flow = Flow.from_client_secrets_file(
-    client_secrets_file=CLIENT_SECRETS_FILE,
+flow = Flow.from_client_config(
+    client_config=CLIENT_CONFIG,
     scopes=SCOPES,
-    redirect_uri=os.getenv('GOOGLE_REDIRECT_URI')
+    redirect_uri=REDIRECT_URI
 )
 
 def is_google_authenticated():
