@@ -1,2 +1,5 @@
 .env
 lassie_google_auth.json
+__pycache__/
+*.py[cod]
+*$py.class

@@ -73,7 +73,8 @@ def google_callback(mongodb_collection):
         id_info = id_token.verify_oauth2_token(
             id_token=credentials._id_token,
             request=token_request,
-            audience=os.getenv('GOOGLE_CLIENT_ID')
+            audience=os.getenv('GOOGLE_CLIENT_ID'),
+            clock_skew_in_seconds=10  # Add tolerance for clock skew
         )
 
         # Extract only required information
