@@ -26,7 +26,6 @@
                        placeholder="Full Name*" 
                        value="{{ form_data.get('fullname', '') }}"
                        required>
-                <label for="fullname">Full Name*</label>
             </div>
             <div class="form-field">
                 <input type="text" 
@@ -37,7 +36,6 @@
                        title="Username must be 3-20 characters long and can only contain letters, numbers, and underscores (no spaces)"
                        value="{{ form_data.get('username', '') }}"
                        required>
-                <label for="username">Username*</label>
                 <small class="input-help">3-20 characters, letters, numbers, and underscore (_) only</small>
             </div>
             <div class="form-field">
@@ -47,7 +45,6 @@
                        placeholder="Email*" 
                        value="{{ form_data.get('email', '') }}"
                        required>
-                <label for="email">Email*</label>
             </div>
             <div class="form-field">
                 <div class="password-field">
@@ -56,28 +53,34 @@
                            name="password" 
                            placeholder="Password*" 
                            required>
-                    <i class="fas fa-eye-slash toggle-password" onclick="togglePasswordVisibility('password')"></i>
+                    <i class="toggle-password" onclick="togglePasswordVisibility('password')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                        </svg>
+                    </i>
                 </div>
-                <label for="password">Password*</label>
                 <div id="password-requirements" class="password-requirements">
                     <h3>Password Requirements:</h3>
-                    <div class="requirement" id="length">
-                        <span class="icon">✕</span> At least 7 characters
-                    </div>
-                    <div class="requirement" id="uppercase">
-                        <span class="icon">✕</span> One uppercase letter
-                    </div>
-                    <div class="requirement" id="lowercase">
-                        <span class="icon">✕</span> One lowercase letter
-                    </div>
-                    <div class="requirement" id="number">
-                        <span class="icon">✕</span> One number
-                    </div>
-                    <div class="requirement" id="special">
-                        <span class="icon">✕</span> One special character
-                    </div>
-                    <div class="requirement" id="space">
-                        <span class="icon">✕</span> No spaces
+                    <div class="requirements-grid">
+                        <div class="requirement" id="length">
+                            <span class="icon">✕</span> At least 7 characters
+                        </div>
+                        <div class="requirement" id="uppercase">
+                            <span class="icon">✕</span> One uppercase letter
+                        </div>
+                        <div class="requirement" id="lowercase">
+                            <span class="icon">✕</span> One lowercase letter
+                        </div>
+                        <div class="requirement" id="number">
+                            <span class="icon">✕</span> One number
+                        </div>
+                        <div class="requirement" id="special">
+                            <span class="icon">✕</span> One special character
+                        </div>
+                        <div class="requirement" id="space">
+                            <span class="icon">✕</span> No spaces
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,14 +91,18 @@
                            name="confirm-password" 
                            placeholder="Confirm Password*" 
                            required>
-                    <i class="fas fa-eye-slash toggle-password" onclick="togglePasswordVisibility('confirm-password')"></i>
+                    <i class="toggle-password" onclick="togglePasswordVisibility('confirm-password')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                            <line x1="1" y1="1" x2="23" y2="23"></line>
+                        </svg>
+                    </i>
                 </div>
-                <label for="confirm-password">Confirm Password*</label>
             </div>
-            <input type="submit" value="Register">
+            <button type="submit" class="register-btn">Register</button>
         </form>
         <div class="login-link">
-            Already have an account? <a href="{{ url_for('login') }}">Sign in</a>
+            Already have an account? <a href="{{ url_for('login') }}">Log in</a>
         </div>
         <div class="divider">
             <hr>
@@ -121,12 +128,16 @@ function togglePasswordVisibility(inputId) {
     
     if (input.type === 'password') {
         input.type = 'text';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
+        icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+        </svg>`;
     } else {
         input.type = 'password';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
+        icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+        </svg>`;
     }
 }
 </script>
