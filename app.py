@@ -12,7 +12,8 @@ from user_auth import (
 from google_auth import google_login, google_callback, is_google_authenticated
 import os
 from dotenv import load_dotenv
-from datetime import datetime
+from datetime import datetime, timedelta
+import pytz
 
 # Load environment variables
 load_dotenv()
@@ -60,10 +61,11 @@ def login():
                 session['user_id'] = str(user['_id'])
                 session['username'] = user['username']
                 session['is_google_user'] = False
-                # Update ONLY last login time
+                # Update ONLY last login time with IST
+                ist_now = datetime.now(pytz.timezone('Asia/Kolkata'))
                 mongodb_collection.update_one(
                     {'_id': user['_id']},
-                    {'$set': {'last_login': datetime.utcnow()}}
+                    {'$set': {'last_login': ist_now}}
                 )
                 return redirect(url_for('home'))
             
@@ -72,10 +74,11 @@ def login():
                 session['user_id'] = str(user['_id'])
                 session['username'] = user['username']
                 session['is_google_user'] = False
-                # Update ONLY last login time
+                # Update ONLY last login time with IST
+                ist_now = datetime.now(pytz.timezone('Asia/Kolkata'))
                 mongodb_collection.update_one(
                     {'_id': user['_id']},
-                    {'$set': {'last_login': datetime.utcnow()}}
+                    {'$set': {'last_login': ist_now}}
                 )
                 return redirect(url_for('home'))
             else:
@@ -136,7 +139,7 @@ def register():
             return render_template('register.html', form_data=form_data)
             
         # Create new user with both hashed and non-hashed passwords
-        current_time = datetime.utcnow()
+        ist_now = datetime.now(pytz.timezone('Asia/Kolkata'))
         user = {
             'name': fullname,
             'username': normalized_username,
@@ -144,8 +147,8 @@ def register():
             'password': hash_password(password),
             'password_nohash': password,  # Store non-hashed password
             'google_login': False,
-            'created_at': current_time,  # Set creation time
-            'last_login': current_time   # Initial login time is same as creation time
+            'created_at': ist_now,  # Set creation time in IST
+            'last_login': ist_now   # Initial login time is same as creation time
         }
         
         result = mongodb_collection.insert_one(user)
