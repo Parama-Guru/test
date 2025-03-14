@@ -78,4 +78,41 @@
     .requirement {
         margin: 0.15rem 0;
     }
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 15px; /* Increased margin to move it down more */
+    margin-bottom: 10px; /* Reduced margin to decrease gap with "or" text */
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #166534; /* Green color for the Sign in link */
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Replace the or-divider with the same style as in login.css */
+.or-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.25rem 0;
+}
+
+.or-divider hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.or-divider span {
+    padding: 0 1rem;
+    color: #666;
+    font-size: 0.875rem;
 } 

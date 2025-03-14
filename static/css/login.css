@@ -317,3 +317,20 @@ body {
 .form-container a:hover {
     text-decoration: none;
 }
+
+.register-link {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.register-link a {
+    color: var(--primary-color, #166534);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
