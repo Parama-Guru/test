@@ -1,83 +1,161 @@
-body {
+/* Base styles */
+* {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f5dc; /* Light beige */
-    color: #333; /* Dark gray for text */
+    padding: 0;
+    box-sizing: border-box;
 }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Navbar styles */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: white;
+    padding: 1rem;
+    background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     z-index: 1000;
 }
+
 .navbar-left {
     display: flex;
     align-items: center;
 }
-.navbar-left a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-}
+
 .navbar-logo {
     height: 40px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+    width: auto;
 }
-.navbar-logo:hover {
-    transform: scale(1.05);
-}
+
 .navbar-right {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
-.username {
-    color: #333;
-    font-weight: 500;
-    margin-right: 1rem;
-}
-.nav-btn, .logout-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    font-weight: 500;
-}
+
 .nav-btn {
-    color: #333;
-    background-color: transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #2E4E1E;
+    font-weight: 500;
+    transition: background-color 0.2s;
 }
+
 .nav-btn:hover {
-    background-color: #f5f5f5;
+    background-color: #f0f0f0;
 }
+
 .logout-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
     color: #fff;
-    background-color: #ff4757;
+    background-color: #2E4E1E;
+    font-weight: 500;
+    transition: background-color 0.2s;
 }
+
 .logout-btn:hover {
-    background-color: #ff6b81;
+    background-color: #1E3B14;
 }
+
+.username {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Content area */
 .content {
-    margin-top: 80px;
-    padding: 2rem;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: calc(100vh - 64px);
 }
+
+/* Responsive design */
 @media (max-width: 768px) {
     .navbar {
-        padding: 1rem;
+        padding: 0.75rem;
     }
-    .username {
-        display: none;
+
+    .navbar-logo {
+        height: 32px;
     }
+
     .nav-btn, .logout-btn {
         padding: 0.4rem 0.8rem;
         font-size: 0.9rem;
+    }
+
+    .username {
+        font-size: 0.8rem;
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .navbar-right {
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+
+    .navbar-logo {
+        height: 28px;
+    }
+
+    .nav-btn, .logout-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    .username {
+        max-width: 100px;
+    }
+
+    .content {
+        padding: 0.5rem;
+    }
+}
+
+/* Utility classes */
+.hidden {
+    display: none;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+/* Animation classes */
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 } 

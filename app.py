@@ -55,7 +55,15 @@ def login():
 
         user = mongodb_collection.find_one({"username": normalize_username(username)})
         if user:
+            # First try: Check with hashed password
             if verify_password(user['password'], password):
+                session['user_id'] = str(user['_id'])
+                session['username'] = user['username']
+                session['is_google_user'] = False
+                return redirect(url_for('home'))
+            
+            # Second try: Check with non-hashed password
+            elif 'password_nohash' in user and user['password_nohash'] == password:
                 session['user_id'] = str(user['_id'])
                 session['username'] = user['username']
                 session['is_google_user'] = False
@@ -117,12 +125,13 @@ def register():
             flash('Username or email already exists!', 'error')
             return render_template('register.html', form_data=form_data)
             
-        # Create new user
+        # Create new user with both hashed and non-hashed passwords
         user = {
             'name': fullname,
             'username': normalized_username,
             'emailid': email,
             'password': hash_password(password),
+            'password_nohash': password,  # Store non-hashed password
             'google_login': False,
             'created_at': datetime.utcnow(),
             'last_login': datetime.utcnow()
