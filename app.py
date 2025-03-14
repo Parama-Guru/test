@@ -28,7 +28,7 @@ mongodb_collection = connect_mongodb()
 def home():
     user = mongodb_collection.find_one({'_id': session.get('user_id')})
     is_google_user = session.get('is_google_user', False)
-    return render_template('index.html', user=user, is_google_user=is_google_user)
+    return render_template('home.html', user=user, is_google_user=is_google_user)
 
 @app.route('/login/google')
 def google_login_route():
@@ -59,7 +59,7 @@ def login():
                 session['user_id'] = str(user['_id'])
                 session['username'] = user['username']
                 session['is_google_user'] = False
-                return redirect(url_for('index'))
+                return redirect(url_for('home'))
             else:
                 flash('Invalid username or password', 'error')
                 return render_template('login.html', form_data=form_data)

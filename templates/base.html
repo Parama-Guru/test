@@ -30,6 +30,7 @@
     </script>
 </head>
 <body>
+    {% if session.get('user_id') or (request.path != '/login' and request.path != '/register') %}
     <div class="navbar">
         <div class="navbar-left">
             <a href="#" onclick="handleLogoClick(event)">
@@ -46,6 +47,7 @@
             {% endif %}
         </div>
     </div>
+    {% endif %}
     <div class="content">
         {% block content %}{% endblock %}
     </div>

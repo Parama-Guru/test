@@ -10,11 +10,11 @@ body {
 .form-wrapper {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     min-height: calc(100vh - 64px);
     padding: 10px 16px;
     box-sizing: border-box;
-    margin-top: 20px;
+    margin-top: -100px;
 }
 
 .form-container {
