@@ -3,6 +3,23 @@
 {% block title %}Home - Lassie{% endblock %}
 
 {% block content %}
-<h2>Welcome to the Home Page!</h2>
-<p>This is the home page of the Lassie application.</p>
+<link rel="stylesheet" type="text/css" href="/static/css/home.css">
+
+<div class="content">
+    <h1>Welcome to the Home Page!</h1>
+    <p>This is the home page of the Lassie application.</p>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Apply red styling to the logout button in the base template
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutBtn = document.querySelector('a[href="/logout"]');
+        if (logoutBtn) {
+            logoutBtn.classList.add('logout-btn');
+        }
+    });
+</script>
 {% endblock %} 

@@ -39,7 +39,7 @@
         </div>
         <div class="navbar-right">
             {% if session.get('user_id') %}
-                <span class="username">Welcome, {{ session.get('username') }}!</span>
+                <div class="user-welcome">Welcome, {{ session.get('username') }}!</div>
                 <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
             {% else %}
                 <a href="{{ url_for('login') }}" class="nav-btn">Login</a>
