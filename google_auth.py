@@ -18,8 +18,18 @@ PROJECT_ID = os.getenv('GOOGLE_PROJECT_ID')
 AUTH_URI = os.getenv('GOOGLE_AUTH_URI')
 TOKEN_URI = os.getenv('GOOGLE_TOKEN_URI')
 AUTH_PROVIDER_X509_CERT_URL = os.getenv('GOOGLE_AUTH_PROVIDER_X509_CERT_URL')
-REDIRECT_URI = os.getenv('GOOGLE_REDIRECT_URI')
-JAVASCRIPT_ORIGINS = os.getenv('GOOGLE_JAVASCRIPT_ORIGINS')
+
+# Determine the base URL based on environment
+def get_base_url():
+    # Check if running on Render
+    if os.environ.get('RENDER'):
+        return os.environ.get('RENDER_EXTERNAL_URL', 'https://test-sl56.onrender.com')
+    # Local development
+    return 'http://127.0.0.1:5000'
+
+# Get the base URL
+BASE_URL = get_base_url()
+REDIRECT_URI = f"{BASE_URL}/callback/google"
 
 # Create client config dictionary from environment variables
 CLIENT_CONFIG = {
@@ -31,23 +41,25 @@ CLIENT_CONFIG = {
         "auth_provider_x509_cert_url": AUTH_PROVIDER_X509_CERT_URL,
         "client_secret": CLIENT_SECRET,
         "redirect_uris": [REDIRECT_URI],
-        "javascript_origins": [JAVASCRIPT_ORIGINS]
+        "javascript_origins": [BASE_URL]
     }
 }
 SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']
 
 # Create OAuth2 flow
-flow = Flow.from_client_config(
-    client_config=CLIENT_CONFIG,
-    scopes=SCOPES,
-    redirect_uri=REDIRECT_URI
-)
+def create_flow():
+    return Flow.from_client_config(
+        client_config=CLIENT_CONFIG,
+        scopes=SCOPES,
+        redirect_uri=REDIRECT_URI
+    )
 
 def is_google_authenticated():
     return 'google_id' in session
 
 def google_login():
     try:
+        flow = create_flow()
         # Add prompt=select_account to force Google to show the account selection screen
         authorization_url, state = flow.authorization_url(
             prompt='select_account'
@@ -61,6 +73,7 @@ def google_login():
 
 def google_callback(mongodb_collection):
     try:
+        flow = create_flow()
         flow.fetch_token(authorization_response=request.url)
 
         if not session.get('state') == request.args.get('state'):
